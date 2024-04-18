@@ -9,6 +9,6 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=500mb
 #SBATCH -t 00:05:00
-#SBATCH -o lulesh_out1
-#SBATCH -e lulesh_err1
-srun ./lulesh2.0 -s 8
+#SBATCH -o lulesh_out0
+#SBATCH -e lulesh_err0
+srun ./lulesh2.0 -s 5
