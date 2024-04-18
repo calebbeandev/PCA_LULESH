@@ -1105,12 +1105,6 @@ static inline void CalcForceForNodes(Domain& domain)
 {
   Index_t numNode = domain.numNode() ;
 
-#if USE_MPI  
-  CommRecv(domain, MSG_COMM_SBN, 3,
-           domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
-           true, false) ;
-#endif  
-
 #pragma omp parallel for firstprivate(numNode)
   for (Index_t i=0; i<numNode; ++i) {
      domain.fx(i) = Real_t(0.0) ;
@@ -1130,6 +1124,11 @@ static inline void CalcForceForNodes(Domain& domain)
   CommSend(domain, MSG_COMM_SBN, 3, fieldData,
            domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() +  1,
            true, false) ;
+
+  CommRecv(domain, MSG_COMM_SBN, 3,
+           domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
+           true, false) ;
+
   CommSBN(domain, 3, fieldData) ;
 #endif  
 }
@@ -1234,14 +1233,6 @@ void LagrangeNodal(Domain& domain)
    * acceleration boundary conditions. */
   CalcForceForNodes(domain);
 
-#if USE_MPI  
-#ifdef SEDOV_SYNC_POS_VEL_EARLY
-   CommRecv(domain, MSG_SYNC_POS_VEL, 6,
-            domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
-            false, false) ;
-#endif
-#endif
-   
    CalcAccelerationForNodes(domain, domain.numNode());
    
    ApplyAccelerationBoundaryConditionsForNodes(domain);
@@ -1259,6 +1250,9 @@ void LagrangeNodal(Domain& domain)
   fieldData[5] = &Domain::zd ;
 
    CommSend(domain, MSG_SYNC_POS_VEL, 6, fieldData,
+            domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
+            false, false) ;
+   CommRecv(domain, MSG_SYNC_POS_VEL, 6,
             domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
             false, false) ;
    CommSyncPosVel(domain) ;
@@ -1959,12 +1953,6 @@ void CalcQForElems(Domain& domain)
 
       domain.AllocateGradients(numElem, allElem);
 
-#if USE_MPI      
-      CommRecv(domain, MSG_MONOQ, 3,
-               domain.sizeX(), domain.sizeY(), domain.sizeZ(),
-               true, true) ;
-#endif      
-
       /* Calculate velocity gradients */
       CalcMonotonicQGradientsForElems(domain);
 
@@ -1979,6 +1967,9 @@ void CalcQForElems(Domain& domain)
       fieldData[2] = &Domain::delv_zeta ;
 
       CommSend(domain, MSG_MONOQ, 3, fieldData,
+               domain.sizeX(), domain.sizeY(), domain.sizeZ(),
+               true, true) ;
+      CommRecv(domain, MSG_MONOQ, 3,
                domain.sizeX(), domain.sizeY(), domain.sizeZ(),
                true, true) ;
 
@@ -2618,10 +2609,6 @@ void LagrangeLeapFrog(Domain& domain)
 
 #if USE_MPI   
 #ifdef SEDOV_SYNC_POS_VEL_LATE
-   CommRecv(domain, MSG_SYNC_POS_VEL, 6,
-            domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
-            false, false) ;
-
    fieldData[0] = &Domain::x ;
    fieldData[1] = &Domain::y ;
    fieldData[2] = &Domain::z ;
@@ -2630,6 +2617,9 @@ void LagrangeLeapFrog(Domain& domain)
    fieldData[5] = &Domain::zd ;
    
    CommSend(domain, MSG_SYNC_POS_VEL, 6, fieldData,
+            domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
+            false, false) ;
+   CommRecv(domain, MSG_SYNC_POS_VEL, 6,
             domain.sizeX() + 1, domain.sizeY() + 1, domain.sizeZ() + 1,
             false, false) ;
 #endif
@@ -2720,11 +2710,11 @@ int main(int argc, char *argv[])
    fieldData = &Domain::nodalMass ;
 
    // Initial domain boundary communication 
-   CommRecv(*locDom, MSG_COMM_SBN, 1,
-            locDom->sizeX() + 1, locDom->sizeY() + 1, locDom->sizeZ() + 1,
-            true, false) ;
    CommSend(*locDom, MSG_COMM_SBN, 1, &fieldData,
             locDom->sizeX() + 1, locDom->sizeY() + 1, locDom->sizeZ() +  1,
+            true, false) ;
+   CommRecv(*locDom, MSG_COMM_SBN, 1,
+            locDom->sizeX() + 1, locDom->sizeY() + 1, locDom->sizeZ() + 1,
             true, false) ;
    CommSBN(*locDom, 1, &fieldData) ;
 
