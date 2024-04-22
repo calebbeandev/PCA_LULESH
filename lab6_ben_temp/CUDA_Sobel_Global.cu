@@ -9,7 +9,6 @@
 #define GRID_DIM_X 500
 #define GRID_DIM_Y 50
 #define N 5000
-#define ALT_CFG 0
 
 // Forward declaration of the kernel function
 __global__ void SobelFilter(uint8_t*, uint8_t*);

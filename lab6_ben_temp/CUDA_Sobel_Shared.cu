@@ -9,7 +9,6 @@
 #define GRID_DIM_X 500
 #define GRID_DIM_Y 50
 #define N 5000
-#define ALT_CFG 0
 
 // Forward declaration of the kernel function
 __global__ void SobelFilter(uint8_t*, uint8_t*);
@@ -23,32 +22,28 @@ __global__ void SobelFilter(uint8_t* A, uint8_t* B) //You may add more variables
 int blockId = blockIdx.x + blockIdx.y * gridDim.x;
 int index = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
 
-int bx = blockDim.x;
-int by = blockDim.y;
 int tx = threadIdx.x;
 int ty = threadIdx.y;
-
-int column = blockIdx.x*bx + tx;
-int row = blockIdx.y*by + ty;
 
 int flag = 0;
 
 int isLeftEdge = 0;
+int isRightEdge = 0;
 int isTopEdge = 0;
+int isBottomEdge = 0;
 
 // End
 
 // REQD: Define shared memory (**NEW**)
 // Start
 
-//uint8_t local_A[BLOCK_DIM_Y+2][BLOCK_DIM_X+2];
-__shared__ int local_A[BLOCK_DIM_Y+2][BLOCK_DIM_X+2];
+__shared__ uint8_t local_A[BLOCK_DIM_Y+2][BLOCK_DIM_X+2];
 
+// every thread copies its center pixel
 local_A[ty+1][tx+1] = A[index];
 
 // if the pixel is on the boundary of the image, skip the calculation...
 // also skip initializing the relevant boundaries of local_A
-
 if (
     index < N || \ // top row
     index >= N * N - N || \ // bottom row
@@ -60,30 +55,35 @@ if (
 } else {
 	
     isTopEdge = ty == 0;
+    isBottomEdge = ty == BLOCK_DIM_Y-1;
 	isLeftEdge = tx == 0;
+    isRightEdge = tx == BLOCK_DIM_X-1;
 
 	// init 4 corners
 	if (isTopEdge && isLeftEdge) {
-		// local_A[0][0] =(row-1) * N + column - 1; // TL
-		local_A[0][0] = A[index - N - 1]; // TL
-	    // local_A[0][BLOCK_DIM_X+1] = (row-1) * N + column + BLOCK_DIM_X; // TR
-	    local_A[0][BLOCK_DIM_X+1] = A[index - N + BLOCK_DIM_X]; // TR
-	    // local_A[BLOCK_DIM_Y+1][0] = (row + BLOCK_DIM_Y) * N + column - 1; // BL
-	    local_A[BLOCK_DIM_Y+1][0] = A[index + BLOCK_DIM_Y * N - 1]; // BL
-	    // local_A[BLOCK_DIM_Y+1][BLOCK_DIM_X+1] = (row + BLOCK_DIM_Y) * N + column + BLOCK_DIM_X; // BR
-	    local_A[BLOCK_DIM_Y+1][BLOCK_DIM_X+1] = A[index + BLOCK_DIM_Y * N + BLOCK_DIM_X]; // BR
+		local_A[0][0] = A[index - N - 1];
+    } else if (isTopEdge && isRightEdge) {
+        local_A[0][BLOCK_DIM_X+1] = A[index - N + 1];
+    } else if (isBottomEdge && isLeftEdge) {
+	    local_A[BLOCK_DIM_Y+1][0] = A[index + N - 1];
+    } else if (isBottomEdge && isRightEdge) {
+	    local_A[BLOCK_DIM_Y+1][BLOCK_DIM_X+1] = A[index + N + 1];
 	}
 
 	// init 4 edges
-	if (isTopEdge)  {
-		local_A[0][tx+1] = A[index - N]; // top row
-        local_A[BLOCK_DIM_Y+1][tx+1] = A[index + N * BLOCK_DIM_Y]; // bottom row
-	}
-	if (isLeftEdge) {
-		local_A[ty+1][0] = A[index - 1]; // left column
-	    local_A[ty+1][BLOCK_DIM_X+1] = A[index + BLOCK_DIM_X]; // right column
-	}
-	
+    if (isTopEdge)  {
+        local_A[0][tx+1] = A[index - N];
+    }
+    if (isLeftEdge) {
+        local_A[ty+1][0] = A[index - 1];
+    }
+    if (isBottomEdge) {
+        local_A[BLOCK_DIM_Y+1][tx+1] = A[index + N];
+    }
+    if (isRightEdge) {
+	    local_A[ty+1][BLOCK_DIM_X+1] = A[index + 1];
+    }
+
 }
 
 __syncthreads();
