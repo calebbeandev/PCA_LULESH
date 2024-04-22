@@ -166,6 +166,11 @@ __host__ void write_image_file(const char *filename, uint8_t* image) {
 int main(int argc, char ** argv)
 {
 
+if (argc != 3) {
+    printf("Usage: %s <input_image.jpg> <output_image.jpg>\n", argv[0]);
+    return 1;
+}
+
 // Step 1: Allocate Host Memory (You may use malloc() to fix any segmentation errors in this part)
 int size = N*N*sizeof(uint8_t);
 uint8_t* A = (uint8_t*)malloc(size);
