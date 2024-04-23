@@ -4,10 +4,10 @@
 #include<stdio.h>
 #include<cuda_profiler_api.h>
 
-#define BLOCK_DIM_X 100
+#define BLOCK_DIM_X 10
 #define BLOCK_DIM_Y 10
 #define GRID_DIM_X 500
-#define GRID_DIM_Y 50
+#define GRID_DIM_Y 500
 #define N 5000
 
 // Forward declaration of the kernel function
@@ -20,12 +20,17 @@ __global__ void SobelFilter(uint8_t* A, uint8_t* B) //You may add more variables
 // REQD: Find Global Index (Hint: You may use the thread index cheat sheet)
 // Start
 int blockId = blockIdx.x + blockIdx.y * gridDim.x;
-int index = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
+
+int width = gridDim.x * blockDim.x;
+
+int bx = blockDim.x;
+int by = blockDim.y;
 
 int tx = threadIdx.x;
 int ty = threadIdx.y;
 
-int flag = 0;
+int column = blockIdx.x * bx + tx;
+int row = blockIdx.y * by + ty; 
 
 int isLeftEdge = 0;
 int isRightEdge = 0;
@@ -40,55 +45,59 @@ int isBottomEdge = 0;
 __shared__ uint8_t local_A[BLOCK_DIM_Y+2][BLOCK_DIM_X+2];
 
 // every thread copies its center pixel
-local_A[ty+1][tx+1] = A[index];
+local_A[ty+1][tx+1] = A[row * width + column];
+// some threads copy edges/corners
+{
 
-// if the pixel is on the boundary of the image, skip the calculation...
-// also skip initializing the relevant boundaries of local_A
-if (
-    index < N || \ // top row
-    index >= N * N - N || \ // bottom row
-    index % N == 0 || \ // left column
-    index % N == N -1 // right column
-) {
-    B[index] = 0;
-	flag = 1;
-} else {
-	
-    isTopEdge = ty == 0;
-    isBottomEdge = ty == BLOCK_DIM_Y-1;
-	isLeftEdge = tx == 0;
-    isRightEdge = tx == BLOCK_DIM_X-1;
+    isTopEdge = (ty == 0) && (row != 0);
+    isBottomEdge = (ty == BLOCK_DIM_Y-1) && (row != N - 1);
+
+	isLeftEdge = (tx == 0) && (column != 0);
+    isRightEdge = (tx == BLOCK_DIM_X-1) && (column != N - 1);
 
 	// init 4 corners
 	if (isTopEdge && isLeftEdge) {
-		local_A[0][0] = A[index - N - 1];
+		local_A[0][0] = A[(row - 1) * width + (column - 1)];
     } else if (isTopEdge && isRightEdge) {
-        local_A[0][BLOCK_DIM_X+1] = A[index - N + 1];
+        local_A[0][BLOCK_DIM_X+1] = A[(row -1) * width + column + 1];
     } else if (isBottomEdge && isLeftEdge) {
-	    local_A[BLOCK_DIM_Y+1][0] = A[index + N - 1];
+	    local_A[BLOCK_DIM_Y+1][0] = A[(row + 1) * width + column - 1];
     } else if (isBottomEdge && isRightEdge) {
-	    local_A[BLOCK_DIM_Y+1][BLOCK_DIM_X+1] = A[index + N + 1];
+	    local_A[BLOCK_DIM_Y+1][BLOCK_DIM_X+1] = A[(row + 1) * width + column + 1];
 	}
 
 	// init 4 edges
     if (isTopEdge)  {
-        local_A[0][tx+1] = A[index - N];
+        local_A[0][tx+1] = A[(row - 1) * width + column];
     }
     if (isLeftEdge) {
-        local_A[ty+1][0] = A[index - 1];
+        local_A[ty+1][0] = A[(row * width) + column - 1];
     }
     if (isBottomEdge) {
-        local_A[BLOCK_DIM_Y+1][tx+1] = A[index + N];
+        local_A[BLOCK_DIM_Y+1][tx+1] = A[(row * width) + column];
     }
     if (isRightEdge) {
-	    local_A[ty+1][BLOCK_DIM_X+1] = A[index + 1];
+	    local_A[ty+1][BLOCK_DIM_X+1] = A[(row * width) + column + 1];
     }
 
 }
 
 __syncthreads();
 
-if (flag) return;
+// DEBUG
+// if (blockId == 100000 && tx == 0 && ty == 0) {
+//     for (int i = 0; i < BLOCK_DIM_X + 2; i++) {
+//         for (int j = 0; j < BLOCK_DIM_Y + 2; j++) {
+//             printf("%d\t", local_A[i][j]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+if (row == 0 || column == 0 || row == N - 1 || column == N - 1) {
+    B[row * width + column] = 0;
+    return;
+}
 
 // End
 
@@ -111,8 +120,9 @@ for (int i = -1; i <= 1; i++) {
         gradient_y += local_A[ty+1+i][tx+1+j] * sobel_y[i + 1][j + 1];
     }
 }
+
 int16_t gradient = abs(gradient_x) + abs(gradient_y);
-B[index] = (gradient > 255) ? 255 : gradient;
+B[row * width + column] = (gradient > 255) ? 255 : gradient;
 
 // End
 
