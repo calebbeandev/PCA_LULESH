@@ -4,10 +4,10 @@
 #include<stdio.h>
 #include<cuda_profiler_api.h>
 
-#define BLOCK_DIM_X 10
-#define BLOCK_DIM_Y 10
-#define GRID_DIM_X 500
-#define GRID_DIM_Y 500
+#define BLOCK_DIM_X 250
+#define BLOCK_DIM_Y 4
+#define GRID_DIM_X 10
+#define GRID_DIM_Y 2500
 #define N 5000
 
 // Forward declaration of the kernel function
@@ -19,18 +19,20 @@ __global__ void SobelFilter(uint8_t* A, uint8_t* B) //You may add more variables
  
 // REQD: Find Global Index (Hint: You may use the thread index cheat sheet)
 // Start
-int blockId = blockIdx.x + blockIdx.y * gridDim.x;
-
-int width = gridDim.x * blockDim.x;
-
-int bx = blockDim.x;
-int by = blockDim.y;
-
 int tx = threadIdx.x;
 int ty = threadIdx.y;
 
-int column = blockIdx.x * bx + tx;
-int row = blockIdx.y * by + ty; 
+int blockId = blockIdx.x + blockIdx.y * gridDim.x;
+
+int blocks_per_row = N / blockDim.x;
+
+int rowId = blockId / blocks_per_row;
+int colId = blockId % blocks_per_row;
+
+int row = rowId * blockDim.y + ty;
+int col = colId * blockDim.x + tx;
+
+int index = row * N + col;
 
 int isLeftEdge = 0;
 int isRightEdge = 0;
@@ -45,57 +47,51 @@ int isBottomEdge = 0;
 __shared__ uint8_t local_A[BLOCK_DIM_Y+2][BLOCK_DIM_X+2];
 
 // every thread copies its center pixel
-local_A[ty+1][tx+1] = A[row * width + column];
+local_A[ty+1][tx+1] = A[index];
+
 // some threads copy edges/corners
 {
 
-    isTopEdge = (ty == 0) && (row != 0);
-    isBottomEdge = (ty == BLOCK_DIM_Y-1) && (row != N - 1);
+    isTopEdge = (ty == 0) && (row > 0);
+    isBottomEdge = (ty == BLOCK_DIM_Y-1) && (row < N-1);
 
-	isLeftEdge = (tx == 0) && (column != 0);
-    isRightEdge = (tx == BLOCK_DIM_X-1) && (column != N - 1);
+	isLeftEdge = (tx == 0) && (col > 0);
+    isRightEdge = (tx == BLOCK_DIM_X-1) && (col < N-1);
 
 	// init 4 corners
 	if (isTopEdge && isLeftEdge) {
-		local_A[0][0] = A[(row - 1) * width + (column - 1)];
-    } else if (isTopEdge && isRightEdge) {
-        local_A[0][BLOCK_DIM_X+1] = A[(row -1) * width + column + 1];
-    } else if (isBottomEdge && isLeftEdge) {
-	    local_A[BLOCK_DIM_Y+1][0] = A[(row + 1) * width + column - 1];
-    } else if (isBottomEdge && isRightEdge) {
-	    local_A[BLOCK_DIM_Y+1][BLOCK_DIM_X+1] = A[(row + 1) * width + column + 1];
+		local_A[ty][tx] = A[index - N - 1];
+    }
+    if (isTopEdge && isRightEdge) {
+        local_A[ty][tx+2] = A[index - N + 1];
+    }
+    if (isBottomEdge && isLeftEdge) {
+	    local_A[ty+2][tx] = A[index + N - 1];
+    }
+    if (isBottomEdge && isRightEdge) {
+	    local_A[ty+2][tx+2] = A[index + N + 1];
 	}
 
 	// init 4 edges
     if (isTopEdge)  {
-        local_A[0][tx+1] = A[(row - 1) * width + column];
+        local_A[ty][tx+1] = A[index - N];
     }
     if (isLeftEdge) {
-        local_A[ty+1][0] = A[(row * width) + column - 1];
+        local_A[ty+1][tx] = A[index - 1];
     }
     if (isBottomEdge) {
-        local_A[BLOCK_DIM_Y+1][tx+1] = A[(row * width) + column];
+        local_A[ty+2][tx+1] = A[index + N];
     }
     if (isRightEdge) {
-	    local_A[ty+1][BLOCK_DIM_X+1] = A[(row * width) + column + 1];
+	    local_A[ty+1][tx+2] = A[index + 1];
     }
 
 }
 
 __syncthreads();
 
-// DEBUG
-// if (blockId == 100000 && tx == 0 && ty == 0) {
-//     for (int i = 0; i < BLOCK_DIM_X + 2; i++) {
-//         for (int j = 0; j < BLOCK_DIM_Y + 2; j++) {
-//             printf("%d\t", local_A[i][j]);
-//         }
-//         printf("\n");
-//     }
-// }
-
-if (row == 0 || column == 0 || row == N - 1 || column == N - 1) {
-    B[row * width + column] = 0;
+if (index < N || index >= N * (N-1) || index % N == 0 || index % N == N - 1) {
+    B[index] = 0;
     return;
 }
 
@@ -114,6 +110,7 @@ const int8_t sobel_y[3][3] = {{-1, -2, -1},
 int16_t gradient_x = 0;
 int16_t gradient_y = 0;
 
+
 for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
         gradient_x += local_A[ty+1+i][tx+1+j] * sobel_x[i + 1][j + 1];
@@ -121,8 +118,9 @@ for (int i = -1; i <= 1; i++) {
     }
 }
 
+
 int16_t gradient = abs(gradient_x) + abs(gradient_y);
-B[row * width + column] = (gradient > 255) ? 255 : gradient;
+B[index] = (gradient > 255) ? 255 : gradient;
 
 // End
 
