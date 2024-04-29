@@ -1,0 +1,288 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 42.90      3.11     3.11                             frame_dummy
+ 14.48      4.16     1.05                             CalcElemFBHourglassForce(double*, double*, double*, double (*) [4], double, double*, double*, double*)
+  8.14      4.75     0.59                             CalcElemVolumeDerivative(double*, double*, double*, double const*, double const*, double const*)
+  7.17      5.27     0.52 24228479     0.00     0.00  SumElemFaceNormal(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double, double, double, double, double, double, double)
+  6.34      5.73     0.46                             CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*)
+  5.79      6.15     0.42 24241389     0.00     0.00  VoluDer(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double*, double*, double*)
+  4.97      6.51     0.36                             CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*)
+  3.31      6.75     0.24  4968531     0.00     0.00  CalcElemCharacteristicLength(double const*, double const*, double const*, double)
+  3.17      6.98     0.23  9006609     0.00     0.00  CalcElemShapeFunctionDerivatives(double const*, double const*, double const*, double (*) [8], double*)
+  1.79      7.11     0.13  9006607     0.00     0.00  CollectDomainNodesToElemNodes(Domain&, int const*, double*, double*, double*)
+  1.38      7.21     0.10  5853265     0.00     0.00  CalcElemVolume(double const*, double const*, double const*)
+  0.28      7.23     0.02        1    20.00    20.00  std::ctype<char>::do_widen(char) const
+  0.14      7.24     0.01        1    10.00    10.00  Domain::BuildMesh(int, int, int)
+  0.14      7.25     0.01                             Domain::Domain(int, int, int, int, int, int, int, int, int)
+  0.00      7.25     0.00      350     0.00     0.00  CalcEnergyForElems(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double*, double*, double, double, int, int*)
+  0.00      7.25     0.00      110     0.00     0.00  EvalEOSForElems(Domain&, double*, int, int*, int)
+  0.00      7.25     0.00       26     0.00     0.00  std::vector<double, std::allocator<double> >::_M_default_append(unsigned long)
+  0.00      7.25     0.00       11     0.00     0.00  std::vector<int, std::allocator<int> >::_M_default_append(unsigned long)
+  0.00      7.25     0.00       10     0.00     0.00  CalcVolumeForceForElems(Domain&)
+  0.00      7.25     0.00       10     0.00     0.00  IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int)
+  0.00      7.25     0.00       10     0.00     0.00  CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int)
+  0.00      7.25     0.00       10     0.00     0.00  CalcHourglassControlForElems(Domain&, double*, double)
+  0.00      7.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z13TimeIncrementR6Domain
+  0.00      7.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z23ParseCommandLineOptionsiPPciP11cmdLineOpts
+  0.00      7.25     0.00        1     0.00     0.00  Domain::SetupCommBuffers(int)
+  0.00      7.25     0.00        1     0.00     0.00  Domain::CreateRegionIndexSets(int, int)
+  0.00      7.25     0.00        1     0.00     0.00  Domain::SetupBoundaryConditions(int)
+  0.00      7.25     0.00        1     0.00     0.00  Domain::SetupElementConnectivities(int)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2021 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.14% of 7.25 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     42.9    3.11    0.00                 frame_dummy [1]
+-----------------------------------------------
+                             4038069             CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*) [2]
+[2]     15.7    0.46    0.68       0+4038069 CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*) [2]
+                0.52    0.00 24228479/24228479     SumElemFaceNormal(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double, double, double, double, double, double, double) [6]
+                0.10    0.00 4038073/9006609     CalcElemShapeFunctionDerivatives(double const*, double const*, double const*, double (*) [8], double*) [9]
+                0.06    0.00 4038072/9006607     CollectDomainNodesToElemNodes(Domain&, int const*, double*, double*, double*) [10]
+                             4038069             CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*) [2]
+-----------------------------------------------
+                             8194767             CalcElemFBHourglassForce(double*, double*, double*, double (*) [4], double, double*, double*, double*) [3]
+[3]     14.5    1.05    0.00       0+8194767 CalcElemFBHourglassForce(double*, double*, double*, double (*) [4], double, double*, double*, double*) [3]
+                             8194767             CalcElemFBHourglassForce(double*, double*, double*, double (*) [4], double, double*, double*, double*) [3]
+-----------------------------------------------
+                             3030157             CalcElemVolumeDerivative(double*, double*, double*, double const*, double const*, double const*) [4]
+[4]     13.9    0.59    0.42       0+3030157 CalcElemVolumeDerivative(double*, double*, double*, double const*, double const*, double const*) [4]
+                0.42    0.00 24241389/24241389     VoluDer(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double*, double*, double*) [7]
+                             3030157             CalcElemVolumeDerivative(double*, double*, double*, double const*, double const*, double const*) [4]
+-----------------------------------------------
+                             4968537             CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [5]
+[5]     12.2    0.36    0.52       0+4968537 CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [5]
+                0.24    0.00 4968531/4968531     CalcElemCharacteristicLength(double const*, double const*, double const*, double) [8]
+                0.13    0.00 4968536/9006609     CalcElemShapeFunctionDerivatives(double const*, double const*, double const*, double (*) [8], double*) [9]
+                0.08    0.00 4968529/5853265     CalcElemVolume(double const*, double const*, double const*) [11]
+                0.07    0.00 4968535/9006607     CollectDomainNodesToElemNodes(Domain&, int const*, double*, double*, double*) [10]
+                             4968537             CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [5]
+-----------------------------------------------
+                0.52    0.00 24228479/24228479     CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*) [2]
+[6]      7.2    0.52    0.00 24228479         SumElemFaceNormal(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double, double, double, double, double, double, double) [6]
+-----------------------------------------------
+                0.42    0.00 24241389/24241389     CalcElemVolumeDerivative(double*, double*, double*, double const*, double const*, double const*) [4]
+[7]      5.8    0.42    0.00 24241389         VoluDer(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double*, double*, double*) [7]
+-----------------------------------------------
+                0.24    0.00 4968531/4968531     CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [5]
+[8]      3.3    0.24    0.00 4968531         CalcElemCharacteristicLength(double const*, double const*, double const*, double) [8]
+-----------------------------------------------
+                0.10    0.00 4038073/9006609     CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*) [2]
+                0.13    0.00 4968536/9006609     CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [5]
+[9]      3.2    0.23    0.00 9006609         CalcElemShapeFunctionDerivatives(double const*, double const*, double const*, double (*) [8], double*) [9]
+-----------------------------------------------
+                0.06    0.00 4038072/9006607     CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*) [2]
+                0.07    0.00 4968535/9006607     CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [5]
+[10]     1.8    0.13    0.00 9006607         CollectDomainNodesToElemNodes(Domain&, int const*, double*, double*, double*) [10]
+-----------------------------------------------
+                0.02    0.00  884736/5853265     Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+                0.08    0.00 4968529/5853265     CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [5]
+[11]     1.4    0.10    0.00 5853265         CalcElemVolume(double const*, double const*, double const*) [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     0.8    0.01    0.05                 Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+                0.02    0.00       1/1           std::ctype<char>::do_widen(char) const [13]
+                0.02    0.00  884736/5853265     CalcElemVolume(double const*, double const*, double const*) [11]
+                0.01    0.00       1/1           Domain::BuildMesh(int, int, int) [14]
+                0.00    0.00      26/26          std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [22]
+                0.00    0.00       9/11          std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) [23]
+                0.00    0.00       1/1           Domain::SetupCommBuffers(int) [30]
+                0.00    0.00       1/1           Domain::CreateRegionIndexSets(int, int) [31]
+                0.00    0.00       1/1           Domain::SetupBoundaryConditions(int) [32]
+                0.00    0.00       1/1           Domain::SetupElementConnectivities(int) [33]
+-----------------------------------------------
+                0.02    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[13]     0.3    0.02    0.00       1         std::ctype<char>::do_widen(char) const [13]
+-----------------------------------------------
+                0.01    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[14]     0.1    0.01    0.00       1         Domain::BuildMesh(int, int, int) [14]
+-----------------------------------------------
+                0.00    0.00     350/350         EvalEOSForElems(Domain&, double*, int, int*, int) [21]
+[20]     0.0    0.00    0.00     350         CalcEnergyForElems(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double*, double*, double, double, int, int*) [20]
+-----------------------------------------------
+                0.00    0.00     110/110         ApplyMaterialPropertiesForElems(Domain&) [60]
+[21]     0.0    0.00    0.00     110         EvalEOSForElems(Domain&, double*, int, int*, int) [21]
+                0.00    0.00     350/350         CalcEnergyForElems(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double*, double*, double, double, int, int*) [20]
+-----------------------------------------------
+                0.00    0.00      26/26          Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[22]     0.0    0.00    0.00      26         std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [22]
+-----------------------------------------------
+                0.00    0.00       2/11          Domain::SetupCommBuffers(int) [30]
+                0.00    0.00       9/11          Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[23]     0.0    0.00    0.00      11         std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) [23]
+-----------------------------------------------
+                0.00    0.00      10/10          LagrangeNodal(Domain&) [36]
+[24]     0.0    0.00    0.00      10         CalcVolumeForceForElems(Domain&) [24]
+                0.00    0.00      10/10          IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int) [25]
+                0.00    0.00      10/10          CalcHourglassControlForElems(Domain&, double*, double) [27]
+-----------------------------------------------
+                0.00    0.00      10/10          CalcVolumeForceForElems(Domain&) [24]
+[25]     0.0    0.00    0.00      10         IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int) [25]
+-----------------------------------------------
+                0.00    0.00      10/10          CalcHourglassControlForElems(Domain&, double*, double) [27]
+[26]     0.0    0.00    0.00      10         CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int) [26]
+-----------------------------------------------
+                0.00    0.00      10/10          CalcVolumeForceForElems(Domain&) [24]
+[27]     0.0    0.00    0.00      10         CalcHourglassControlForElems(Domain&, double*, double) [27]
+                0.00    0.00      10/10          CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int) [26]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [70]
+[28]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z13TimeIncrementR6Domain [28]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [70]
+[29]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z23ParseCommandLineOptionsiPPciP11cmdLineOpts [29]
+-----------------------------------------------
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[30]     0.0    0.00    0.00       1         Domain::SetupCommBuffers(int) [30]
+                0.00    0.00       2/11          std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) [23]
+-----------------------------------------------
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[31]     0.0    0.00    0.00       1         Domain::CreateRegionIndexSets(int, int) [31]
+-----------------------------------------------
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[32]     0.0    0.00    0.00       1         Domain::SetupBoundaryConditions(int) [32]
+-----------------------------------------------
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [12]
+[33]     0.0    0.00    0.00       1         Domain::SetupElementConnectivities(int) [33]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2021 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [28] _GLOBAL__sub_I__Z13TimeIncrementR6Domain (lulesh.cc) [5] CalcElemVelocityGradient(double const*, double const*, double const*, double const (*) [8], double, double*) [32] Domain::SetupBoundaryConditions(int)
+  [29] _GLOBAL__sub_I__Z23ParseCommandLineOptionsiPPciP11cmdLineOpts (lulesh-util.cc) [4] CalcElemVolumeDerivative(double*, double*, double*, double const*, double const*, double const*) [33] Domain::SetupElementConnectivities(int)
+  [11] CalcElemVolume(double const*, double const*, double const*) [8] CalcElemCharacteristicLength(double const*, double const*, double const*, double) [14] Domain::BuildMesh(int, int, int)
+  [21] EvalEOSForElems(Domain&, double*, int, int*, int) [26] CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int) [12] Domain::Domain(int, int, int, int, int, int, int, int, int)
+   [6] SumElemFaceNormal(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double, double, double, double, double, double, double) [27] CalcHourglassControlForElems(Domain&, double*, double) [13] std::ctype<char>::do_widen(char) const
+  [20] CalcEnergyForElems(double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double*, double, double, double, double, double, double*, double*, double, double, int, int*) [10] CollectDomainNodesToElemNodes(Domain&, int const*, double*, double*, double*) [22] std::vector<double, std::allocator<double> >::_M_default_append(unsigned long)
+   [2] CalcElemNodeNormals(double*, double*, double*, double const*, double const*, double const*) [9] CalcElemShapeFunctionDerivatives(double const*, double const*, double const*, double (*) [8], double*) [23] std::vector<int, std::allocator<int> >::_M_default_append(unsigned long)
+  [24] CalcVolumeForceForElems(Domain&) [7] VoluDer(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double*, double*, double*) [1] frame_dummy
+  [25] IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int) [30] Domain::SetupCommBuffers(int)
+   [3] CalcElemFBHourglassForce(double*, double*, double*, double (*) [4], double, double*, double*, double*) [31] Domain::CreateRegionIndexSets(int, int)

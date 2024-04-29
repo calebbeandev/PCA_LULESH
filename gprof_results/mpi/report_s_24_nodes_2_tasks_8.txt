@@ -1,0 +1,290 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 38.46      0.05     0.05      110     0.45     0.45  _INTERNALc12a8ae3::EvalEOSForElems(Domain&, double*, int, int*, int)
+ 15.39      0.07     0.02       10     2.00     2.00  CalcKinematicsForElems(Domain&, double, int)
+ 15.39      0.09     0.02       10     2.00     6.00  _INTERNALc12a8ae3::LagrangeNodal(Domain&)
+ 15.39      0.11     0.02       10     2.00     2.00  _INTERNALc12a8ae3::IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int)
+ 15.39      0.13     0.02       10     2.00     2.00  _INTERNALc12a8ae3::CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int)
+  0.00      0.13     0.00    13825     0.00     0.00  CalcElemVolume(double const*, double const*, double const*)
+  0.00      0.13     0.00      110     0.00     0.00  _INTERNALc12a8ae3::CalcMonotonicQRegionForElems(Domain&, int, double)
+  0.00      0.13     0.00       31     0.00     0.00  CommRecv(Domain&, int, int, int, int, int, bool, bool)
+  0.00      0.13     0.00       31     0.00     0.00  CommSend(Domain&, int, int, double& (Domain::**)(int), int, int, int, bool, bool)
+  0.00      0.13     0.00       26     0.00     0.00  std::vector<double, std::allocator<double> >::vector()
+  0.00      0.13     0.00       23     0.00     0.00  std::vector<double, std::allocator<double> >::_M_default_append(unsigned long)
+  0.00      0.13     0.00       11     0.00     0.00  CommSBN(Domain&, int, double& (Domain::**)(int))
+  0.00      0.13     0.00       11     0.00     0.00  std::vector<int, std::allocator<int> >::vector()
+  0.00      0.13     0.00       10     0.00     0.00  CommSyncPosVel(Domain&)
+  0.00      0.13     0.00       10     0.00     0.00  CommMonoQ(Domain&)
+  0.00      0.13     0.00       10     0.00     0.00  _INTERNALc12a8ae3::CalcMonotonicQGradientsForElems(Domain&)
+  0.00      0.13     0.00        6     0.00     0.00  std::_Vector_base<double, std::allocator<double> >::~_Vector_base()
+  0.00      0.13     0.00        6     0.00     0.00  std::vector<int, std::allocator<int> >::_M_default_append(unsigned long)
+  0.00      0.13     0.00        2     0.00     0.00  VerifyAndWriteFinalOutput(double, Domain&, int, int)
+  0.00      0.13     0.00        1     0.00     0.00  InitMeshDecomp(int, int, int*, int*, int*, int*)
+  0.00      0.13     0.00        1     0.00     0.00  ParseCommandLineOptions(int, char**, int, cmdLineOpts*)
+  0.00      0.13     0.00        1     0.00     0.00  Domain::SetupCommBuffers(int)
+  0.00      0.13     0.00        1     0.00     0.00  Domain::AllocateElemPersistent(int)
+  0.00      0.13     0.00        1     0.00     0.00  Domain::AllocateNodePersistent(int)
+  0.00      0.13     0.00        1     0.00     0.00  Domain::Domain(int, int, int, int, int, int, int, int, int)
+  0.00      0.13     0.00        1     0.00     0.00  Domain::~Domain()
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2021 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 7.69% of 0.13 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00    0.13                 main [1]
+                0.02    0.04      10/10          _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+                0.05    0.00     110/110         _INTERNALc12a8ae3::EvalEOSForElems(Domain&, double*, int, int*, int) [3]
+                0.02    0.00      10/10          CalcKinematicsForElems(Domain&, double, int) [4]
+                0.00    0.00     110/110         _INTERNALc12a8ae3::CalcMonotonicQRegionForElems(Domain&, int, double) [17]
+                0.00    0.00      11/31          CommRecv(Domain&, int, int, int, int, int, bool, bool) [18]
+                0.00    0.00      11/31          CommSend(Domain&, int, int, double& (Domain::**)(int), int, int, int, bool, bool) [19]
+                0.00    0.00      10/10          _INTERNALc12a8ae3::CalcMonotonicQGradientsForElems(Domain&) [26]
+                0.00    0.00      10/10          CommMonoQ(Domain&) [25]
+                0.00    0.00       1/1           ParseCommandLineOptions(int, char**, int, cmdLineOpts*) [31]
+                0.00    0.00       1/1           InitMeshDecomp(int, int, int*, int*, int*, int*) [30]
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+                0.00    0.00       1/11          CommSBN(Domain&, int, double& (Domain::**)(int)) [22]
+                0.00    0.00       1/2           VerifyAndWriteFinalOutput(double, Domain&, int, int) [29]
+                0.00    0.00       1/1           Domain::~Domain() [36]
+-----------------------------------------------
+                0.02    0.04      10/10          main [1]
+[2]     46.2    0.02    0.04      10         _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+                0.02    0.00      10/10          _INTERNALc12a8ae3::IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int) [5]
+                0.02    0.00      10/10          _INTERNALc12a8ae3::CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int) [6]
+                0.00    0.00      20/31          CommRecv(Domain&, int, int, int, int, int, bool, bool) [18]
+                0.00    0.00      20/31          CommSend(Domain&, int, int, double& (Domain::**)(int), int, int, int, bool, bool) [19]
+                0.00    0.00      10/11          CommSBN(Domain&, int, double& (Domain::**)(int)) [22]
+                0.00    0.00      10/10          CommSyncPosVel(Domain&) [24]
+-----------------------------------------------
+                0.05    0.00     110/110         main [1]
+[3]     38.5    0.05    0.00     110         _INTERNALc12a8ae3::EvalEOSForElems(Domain&, double*, int, int*, int) [3]
+-----------------------------------------------
+                0.02    0.00      10/10          main [1]
+[4]     15.4    0.02    0.00      10         CalcKinematicsForElems(Domain&, double, int) [4]
+-----------------------------------------------
+                0.02    0.00      10/10          _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+[5]     15.4    0.02    0.00      10         _INTERNALc12a8ae3::IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int) [5]
+-----------------------------------------------
+                0.02    0.00      10/10          _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+[6]     15.4    0.02    0.00      10         _INTERNALc12a8ae3::CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int) [6]
+-----------------------------------------------
+                0.00    0.00       1/13825       __libc_csu_init [105]
+                0.00    0.00   13824/13825       Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+[16]     0.0    0.00    0.00   13825         CalcElemVolume(double const*, double const*, double const*) [16]
+-----------------------------------------------
+                0.00    0.00     110/110         main [1]
+[17]     0.0    0.00    0.00     110         _INTERNALc12a8ae3::CalcMonotonicQRegionForElems(Domain&, int, double) [17]
+-----------------------------------------------
+                0.00    0.00      11/31          main [1]
+                0.00    0.00      20/31          _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+[18]     0.0    0.00    0.00      31         CommRecv(Domain&, int, int, int, int, int, bool, bool) [18]
+-----------------------------------------------
+                0.00    0.00      11/31          main [1]
+                0.00    0.00      20/31          _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+[19]     0.0    0.00    0.00      31         CommSend(Domain&, int, int, double& (Domain::**)(int), int, int, int, bool, bool) [19]
+-----------------------------------------------
+                0.00    0.00      26/26          Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+[20]     0.0    0.00    0.00      26         std::vector<double, std::allocator<double> >::vector() [20]
+-----------------------------------------------
+                0.00    0.00       1/23          Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+                0.00    0.00      10/23          Domain::AllocateNodePersistent(int) [34]
+                0.00    0.00      12/23          Domain::AllocateElemPersistent(int) [33]
+[21]     0.0    0.00    0.00      23         std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [21]
+-----------------------------------------------
+                0.00    0.00       1/11          main [1]
+                0.00    0.00      10/11          _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+[22]     0.0    0.00    0.00      11         CommSBN(Domain&, int, double& (Domain::**)(int)) [22]
+-----------------------------------------------
+                0.00    0.00      11/11          Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+[23]     0.0    0.00    0.00      11         std::vector<int, std::allocator<int> >::vector() [23]
+-----------------------------------------------
+                0.00    0.00      10/10          _INTERNALc12a8ae3::LagrangeNodal(Domain&) [2]
+[24]     0.0    0.00    0.00      10         CommSyncPosVel(Domain&) [24]
+-----------------------------------------------
+                0.00    0.00      10/10          main [1]
+[25]     0.0    0.00    0.00      10         CommMonoQ(Domain&) [25]
+-----------------------------------------------
+                0.00    0.00      10/10          main [1]
+[26]     0.0    0.00    0.00      10         _INTERNALc12a8ae3::CalcMonotonicQGradientsForElems(Domain&) [26]
+-----------------------------------------------
+                0.00    0.00       6/6           Domain::~Domain() [36]
+[27]     0.0    0.00    0.00       6         std::_Vector_base<double, std::allocator<double> >::~_Vector_base() [27]
+-----------------------------------------------
+                0.00    0.00       6/6           Domain::AllocateElemPersistent(int) [33]
+[28]     0.0    0.00    0.00       6         std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) [28]
+-----------------------------------------------
+                0.00    0.00       1/2           main [1]
+                0.00    0.00       1/2           __libc_csu_init [105]
+[29]     0.0    0.00    0.00       2         VerifyAndWriteFinalOutput(double, Domain&, int, int) [29]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[30]     0.0    0.00    0.00       1         InitMeshDecomp(int, int, int*, int*, int*, int*) [30]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[31]     0.0    0.00    0.00       1         ParseCommandLineOptions(int, char**, int, cmdLineOpts*) [31]
+-----------------------------------------------
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+[32]     0.0    0.00    0.00       1         Domain::SetupCommBuffers(int) [32]
+-----------------------------------------------
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+[33]     0.0    0.00    0.00       1         Domain::AllocateElemPersistent(int) [33]
+                0.00    0.00      12/23          std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [21]
+                0.00    0.00       6/6           std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) [28]
+-----------------------------------------------
+                0.00    0.00       1/1           Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+[34]     0.0    0.00    0.00       1         Domain::AllocateNodePersistent(int) [34]
+                0.00    0.00      10/23          std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [21]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[35]     0.0    0.00    0.00       1         Domain::Domain(int, int, int, int, int, int, int, int, int) [35]
+                0.00    0.00   13824/13825       CalcElemVolume(double const*, double const*, double const*) [16]
+                0.00    0.00      26/26          std::vector<double, std::allocator<double> >::vector() [20]
+                0.00    0.00      11/11          std::vector<int, std::allocator<int> >::vector() [23]
+                0.00    0.00       1/23          std::vector<double, std::allocator<double> >::_M_default_append(unsigned long) [21]
+                0.00    0.00       1/1           Domain::AllocateElemPersistent(int) [33]
+                0.00    0.00       1/1           Domain::SetupCommBuffers(int) [32]
+                0.00    0.00       1/1           Domain::AllocateNodePersistent(int) [34]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[36]     0.0    0.00    0.00       1         Domain::~Domain() [36]
+                0.00    0.00       6/6           std::_Vector_base<double, std::allocator<double> >::~_Vector_base() [27]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2021 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [16] CalcElemVolume(double const*, double const*, double const*) [25] CommMonoQ(Domain&) [34] Domain::AllocateNodePersistent(int)
+  [24] CommSyncPosVel(Domain&) [2] _INTERNALc12a8ae3::LagrangeNodal(Domain&) (lulesh.cc) [35] Domain::Domain(int, int, int, int, int, int, int, int, int)
+  [30] InitMeshDecomp(int, int, int*, int*, int*, int*) [3] _INTERNALc12a8ae3::EvalEOSForElems(Domain&, double*, int, int*, int) (lulesh.cc) [36] Domain::~Domain()
+   [4] CalcKinematicsForElems(Domain&, double, int) [5] _INTERNALc12a8ae3::IntegrateStressForElems(Domain&, double*, double*, double*, double*, int, int) (lulesh.cc) [27] std::_Vector_base<double, std::allocator<double> >::~_Vector_base()
+  [31] ParseCommandLineOptions(int, char**, int, cmdLineOpts*) [6] _INTERNALc12a8ae3::CalcFBHourglassForceForElems(Domain&, double*, double*, double*, double*, double*, double*, double*, double, int, int) (lulesh.cc) [21] std::vector<double, std::allocator<double> >::_M_default_append(unsigned long)
+  [29] VerifyAndWriteFinalOutput(double, Domain&, int, int) [17] _INTERNALc12a8ae3::CalcMonotonicQRegionForElems(Domain&, int, double) (lulesh.cc) [20] std::vector<double, std::allocator<double> >::vector()
+  [22] CommSBN(Domain&, int, double& (Domain::**)(int)) [26] _INTERNALc12a8ae3::CalcMonotonicQGradientsForElems(Domain&) (lulesh.cc) [28] std::vector<int, std::allocator<int> >::_M_default_append(unsigned long)
+  [18] CommRecv(Domain&, int, int, int, int, int, bool, bool) [32] Domain::SetupCommBuffers(int) [23] std::vector<int, std::allocator<int> >::vector()
+  [19] CommSend(Domain&, int, int, double& (Domain::**)(int), int, int, int, bool, bool) [33] Domain::AllocateElemPersistent(int)
