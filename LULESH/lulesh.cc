@@ -163,7 +163,7 @@ Additional BSD Notice
 
 /* Work Routines */
 
-static inline
+//static inline
 void TimeIncrement(Domain& domain)
 {
    Real_t targetdt = domain.stoptime() - domain.time() ;
@@ -223,7 +223,7 @@ void TimeIncrement(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CollectDomainNodesToElemNodes(Domain &domain,
                                    const Index_t* elemToNode,
                                    Real_t elemX[8],
@@ -270,7 +270,7 @@ void CollectDomainNodesToElemNodes(Domain &domain,
 
 /******************************************/
 
-static inline
+//static inline
 void InitStressTermsForElems(Domain &domain,
                              Real_t *sigxx, Real_t *sigyy, Real_t *sigzz,
                              Index_t numElem)
@@ -287,7 +287,7 @@ void InitStressTermsForElems(Domain &domain,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcElemShapeFunctionDerivatives( Real_t const x[],
                                        Real_t const y[],
                                        Real_t const z[],
@@ -378,7 +378,7 @@ void CalcElemShapeFunctionDerivatives( Real_t const x[],
 
 /******************************************/
 
-static inline
+//static inline
 void SumElemFaceNormal(Real_t *normalX0, Real_t *normalY0, Real_t *normalZ0,
                        Real_t *normalX1, Real_t *normalY1, Real_t *normalZ1,
                        Real_t *normalX2, Real_t *normalY2, Real_t *normalZ2,
@@ -416,7 +416,7 @@ void SumElemFaceNormal(Real_t *normalX0, Real_t *normalY0, Real_t *normalZ0,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcElemNodeNormals(Real_t pfx[8],
                          Real_t pfy[8],
                          Real_t pfz[8],
@@ -475,7 +475,7 @@ void CalcElemNodeNormals(Real_t pfx[8],
 
 /******************************************/
 
-static inline
+//static inline
 void SumElemStressesToNodeForces( const Real_t B[][8],
                                   const Real_t stress_xx,
                                   const Real_t stress_yy,
@@ -491,7 +491,7 @@ void SumElemStressesToNodeForces( const Real_t B[][8],
 
 /******************************************/
 
-static inline
+//static inline
 void IntegrateStressForElems( Domain &domain,
                               Real_t *sigxx, Real_t *sigyy, Real_t *sigzz,
                               Real_t *determ, Index_t numElem, Index_t numNode)
@@ -588,7 +588,7 @@ void IntegrateStressForElems( Domain &domain,
 
 /******************************************/
 
-static inline
+//static inline
 void VoluDer(const Real_t x0, const Real_t x1, const Real_t x2,
              const Real_t x3, const Real_t x4, const Real_t x5,
              const Real_t y0, const Real_t y1, const Real_t y2,
@@ -620,7 +620,7 @@ void VoluDer(const Real_t x0, const Real_t x1, const Real_t x2,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcElemVolumeDerivative(Real_t dvdx[8],
                               Real_t dvdy[8],
                               Real_t dvdz[8],
@@ -664,7 +664,7 @@ void CalcElemVolumeDerivative(Real_t dvdx[8],
 
 /******************************************/
 
-static inline
+//static inline
 void CalcElemFBHourglassForce(Real_t *xd, Real_t *yd, Real_t *zd,  Real_t hourgam[][4],
                               Real_t coefficient,
                               Real_t *hgfx, Real_t *hgfy, Real_t *hgfz )
@@ -707,7 +707,7 @@ void CalcElemFBHourglassForce(Real_t *xd, Real_t *yd, Real_t *zd,  Real_t hourga
 
 /******************************************/
 
-static inline
+//static inline
 void CalcFBHourglassForceForElems( Domain &domain,
                                    Real_t *determ,
                                    Real_t *x8n, Real_t *y8n, Real_t *z8n,
@@ -992,7 +992,7 @@ void CalcFBHourglassForceForElems( Domain &domain,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcHourglassControlForElems(Domain& domain,
                                   Real_t determ[], Real_t hgcoef)
 {
@@ -1058,7 +1058,7 @@ void CalcHourglassControlForElems(Domain& domain,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcVolumeForceForElems(Domain& domain)
 {
    Index_t numElem = domain.numElem() ;
@@ -1101,7 +1101,7 @@ void CalcVolumeForceForElems(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcForceForNodes(Domain& domain)
 {
   Index_t numNode = domain.numNode() ;
@@ -1137,7 +1137,7 @@ void CalcForceForNodes(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcAccelerationForNodes(Domain &domain, Index_t numNode)
 {
    
@@ -1151,7 +1151,7 @@ void CalcAccelerationForNodes(Domain &domain, Index_t numNode)
 
 /******************************************/
 
-static inline
+//static inline
 void ApplyAccelerationBoundaryConditionsForNodes(Domain& domain)
 {
    Index_t size = domain.sizeX();
@@ -1181,7 +1181,7 @@ void ApplyAccelerationBoundaryConditionsForNodes(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcVelocityForNodes(Domain &domain, const Real_t dt, const Real_t u_cut,
                           Index_t numNode)
 {
@@ -1207,7 +1207,7 @@ void CalcVelocityForNodes(Domain &domain, const Real_t dt, const Real_t u_cut,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcPositionForNodes(Domain &domain, const Real_t dt, Index_t numNode)
 {
 #pragma omp parallel for firstprivate(numNode) schedule(dynamic,10)
@@ -1221,7 +1221,7 @@ void CalcPositionForNodes(Domain &domain, const Real_t dt, Index_t numNode)
 
 /******************************************/
 
-static inline
+//static inline
 void LagrangeNodal(Domain& domain)
 {
 #ifdef SEDOV_SYNC_POS_VEL_EARLY
@@ -1271,7 +1271,7 @@ void LagrangeNodal(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 Real_t CalcElemVolume( const Real_t x0, const Real_t x1,
                const Real_t x2, const Real_t x3,
                const Real_t x4, const Real_t x5,
@@ -1368,7 +1368,7 @@ return CalcElemVolume( x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7],
 
 /******************************************/
 
-static inline
+//static inline
 Real_t AreaFace( const Real_t x0, const Real_t x1,
                  const Real_t x2, const Real_t x3,
                  const Real_t y0, const Real_t y1,
@@ -1392,7 +1392,7 @@ Real_t AreaFace( const Real_t x0, const Real_t x1,
 
 /******************************************/
 
-static inline
+//static inline
 Real_t CalcElemCharacteristicLength( const Real_t x[8],
                                      const Real_t y[8],
                                      const Real_t z[8],
@@ -1437,7 +1437,7 @@ Real_t CalcElemCharacteristicLength( const Real_t x[8],
 
 /******************************************/
 
-static inline
+//static inline
 void CalcElemVelocityGradient( const Real_t* const xvel,
                                 const Real_t* const yvel,
                                 const Real_t* const zvel,
@@ -1502,7 +1502,7 @@ void CalcElemVelocityGradient( const Real_t* const xvel,
 
 /******************************************/
 
-//static inline
+////static inline
 void CalcKinematicsForElems( Domain &domain,
                              Real_t deltaTime, Index_t numElem )
 {
@@ -1570,7 +1570,7 @@ void CalcKinematicsForElems( Domain &domain,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcLagrangeElements(Domain& domain)
 {
    Index_t numElem = domain.numElem() ;
@@ -1611,7 +1611,7 @@ void CalcLagrangeElements(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcMonotonicQGradientsForElems(Domain& domain)
 {
    Index_t numElem = domain.numElem();
@@ -1759,7 +1759,7 @@ void CalcMonotonicQGradientsForElems(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcMonotonicQRegionForElems(Domain &domain, Int_t r,
                                   Real_t ptiny)
 {
@@ -1923,7 +1923,7 @@ void CalcMonotonicQRegionForElems(Domain &domain, Int_t r,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcMonotonicQForElems(Domain& domain)
 {  
    //
@@ -1943,7 +1943,7 @@ void CalcMonotonicQForElems(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcQForElems(Domain& domain)
 {
    //
@@ -2012,7 +2012,7 @@ void CalcQForElems(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcPressureForElems(Real_t* p_new, Real_t* bvc,
                           Real_t* pbvc, Real_t* e_old,
                           Real_t* compression, Real_t *vnewc,
@@ -2046,7 +2046,7 @@ void CalcPressureForElems(Real_t* p_new, Real_t* bvc,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcEnergyForElems(Real_t* p_new, Real_t* e_new, Real_t* q_new,
                         Real_t* bvc, Real_t* pbvc,
                         Real_t* p_old, Real_t* e_old, Real_t* q_old,
@@ -2178,7 +2178,7 @@ void CalcEnergyForElems(Real_t* p_new, Real_t* e_new, Real_t* q_new,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcSoundSpeedForElems(Domain &domain,
                             Real_t *vnewc, Real_t rho0, Real_t *enewc,
                             Real_t *pnewc, Real_t *pbvc,
@@ -2202,7 +2202,7 @@ void CalcSoundSpeedForElems(Domain &domain,
 
 /******************************************/
 
-static inline
+//static inline
 void EvalEOSForElems(Domain& domain, Real_t *vnewc,
                      Int_t numElemReg, Index_t *regElemList, Int_t rep)
 {
@@ -2326,7 +2326,7 @@ void EvalEOSForElems(Domain& domain, Real_t *vnewc,
 
 /******************************************/
 
-static inline
+//static inline
 void ApplyMaterialPropertiesForElems(Domain& domain)
 {
    Index_t numElem = domain.numElem() ;
@@ -2408,7 +2408,7 @@ void ApplyMaterialPropertiesForElems(Domain& domain)
 
 /******************************************/
 
-static inline
+//static inline
 void UpdateVolumesForElems(Domain &domain,
                            Real_t v_cut, Index_t length)
 {
@@ -2429,7 +2429,7 @@ void UpdateVolumesForElems(Domain &domain,
 
 /******************************************/
 
-static inline
+//static inline
 void LagrangeElements(Domain& domain, Index_t numElem)
 {
   CalcLagrangeElements(domain) ;
@@ -2445,7 +2445,7 @@ void LagrangeElements(Domain& domain, Index_t numElem)
 
 /******************************************/
 
-static inline
+//static inline
 void CalcCourantConstraintForElems(Domain &domain, Index_t length,
                                    Index_t *regElemlist,
                                    Real_t qqc, Real_t& dtcourant)
@@ -2515,7 +2515,7 @@ void CalcCourantConstraintForElems(Domain &domain, Index_t length,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcHydroConstraintForElems(Domain &domain, Index_t length,
                                  Index_t *regElemlist, Real_t dvovmax, Real_t& dthydro)
 {
@@ -2574,7 +2574,7 @@ void CalcHydroConstraintForElems(Domain &domain, Index_t length,
 
 /******************************************/
 
-static inline
+//static inline
 void CalcTimeConstraintsForElems(Domain& domain) {
 
    // Initialize conditions to a very large value
@@ -2598,7 +2598,7 @@ void CalcTimeConstraintsForElems(Domain& domain) {
 
 /******************************************/
 
-static inline
+//static inline
 void LagrangeLeapFrog(Domain& domain)
 {
 #ifdef SEDOV_SYNC_POS_VEL_LATE
